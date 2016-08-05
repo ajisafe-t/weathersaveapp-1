@@ -22,3 +22,7 @@ div#address_section{
 #submit_section{
   text-align: center;
 }
+
+span.error{
+  visibility: hidden;
+}
