@@ -9,11 +9,17 @@
 		<script type="text/javascript" src="js/save_forecast.js"></script>
 	</head>
 	<body>
+		<div id="top_banner">Cloudant Weather Save App</div>
 		<div id="body_wrapper">
-			<label for="address"/>
-			<input type="text" class="textbox" id="address" name="address"/>
-			<button id="get_forecast" type="button"></button>
-			<div class="banner"></label>
+
+			<div id="address_section">
+				<label for="address" id="address_label">Address:</label>
+				<input type="text" class="textbox" id="address" name="address" placeholder="Enter city, town location"/>
+			</div>
+			<div id="submit_section">
+				<button id="save_forecast" type="button">Get Forecast</button>
+			</div>
+			<div class="banner"></div>
 		</div>
 	</body>
 </html>

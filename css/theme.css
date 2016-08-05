@@ -1,0 +1,24 @@
+div#top_banner{
+  position: fixed;
+  height: 40px;
+  width: 100%;
+}
+#body_wrapper{
+  width: 100%;
+  height: 720px;
+  position: absolute;
+  top: 80px;
+  margin-left: auto;
+  margin-right: auto;
+}
+div#address_section{
+  text-align: center;
+  margin: 10px;
+}
+#address_label{
+  width: 600px;
+}
+
+#submit_section{
+  text-align: center;
+}
