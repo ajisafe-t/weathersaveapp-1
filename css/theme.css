@@ -26,3 +26,7 @@ div#address_section{
 span.error{
   visibility: hidden;
 }
+
+.visible{
+  visibility: visible;;
+}
