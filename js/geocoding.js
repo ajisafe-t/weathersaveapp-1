@@ -1,11 +1,23 @@
 var li = "<li></li>"
 var $address_list="";
+var $search_results="";
+
 $(document).ready(function(){
 
   $address_list = $("ul.address_list");
   $('#save_forecast').click(function(event){
     getForecast(event);
   });
+
+  //on clicking one of the search results get weather data and submit to Cloudant
+  $(".search_results").click(function(event){
+
+    //var $clicked_element = $(this);
+    //$(event.target);
+    getWeatherData(event);
+
+  });
+
 
 });
 
