@@ -28,5 +28,19 @@ span.error{
 }
 
 .visible{
-  visibility: visible;;
+  visibility: visible;
+}
+
+#address_list_section{
+    display: none;
+    width: 300px;
+}
+
+.address_list{
+  list-style-type: none;
+}
+
+.search_results:hover{
+  cursor: pointer;
+  font-weight: bold;
 }
