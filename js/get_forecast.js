@@ -1,32 +1,35 @@
-function getWeatherData(event){
-  var $clicked_element = $(event.target);
-  var latitude = $clicked_element.attr("lat");
-  var longitude = $clicked_element.attr("lng");
+var daily_weather_data="";
+
+function getWeatherData(event, location_data){
+  var $clicked_element, latitude, longitude = null;
+  if (event == null) {
+
+    latitude = location_data.results[0].geometry.location.lat;
+    longitude = location_data.results[0].geometry.location.lng;
+
+  } else {
+
+    $clicked_element = $(event.target);
+    latitude = $clicked_element.attr("lat");
+    longitude = $clicked_element.attr("long");
+    
+  }
+  console.log("getWeatherData() start");
 
   $.ajax({
 
-            url : 'https://maps.googleapis.com/maps/api/geocode/json?address=' + location_text,
-            //data : {book : JSON.stringify(new_book)},
-            type : 'GET',
-            dataType: 'json',
+            url : "https://api.forecast.io/forecast/932b5e0f9627698b7c6e4aab9522ea64/" + latitude + "," + longitude,
+            data : {units : "ca"},
+            type : "GET",
+            dataType: "jsonp",
+            headers: { "Accept-Encoding" : "gzip" },
             success: function(data, textStatus, jqXHR){
               //var json2 = JSON.parse(data);
-              if (data.results.length>1){
+              daily_weather_data = data;
+              console.log("getWeatherData() success");
+              console.log("latitude: " + data.latitude + ", longitude: " + data.longitude + ", timezone: " + data.timezone);
+              saveDataInCloudant(event, daily_weather_data);
 
-                for (i=0; i < data.results.length; i++){
-                    $address_list.append(li);
-                    var $last_li=$address_list.children().last();
-                    $last_li.attr({
-                      lat: data.results[i].geometry.location.lat,
-                      long: data.results[i].geometry.location.lng,
-                      class: "search_results"
-                    });
-                    $last_li.html(data.results[i].formatted_address);
-                }
-
-
-              }
-              $address_list.parent().show();
             },
             error: function(jqXHR,textStatus, errorThrown){
 
@@ -35,5 +38,33 @@ function getWeatherData(event){
             }
 
           });
-          
+
+}
+
+function saveDataInCloudant(event, daily_weather_data){
+  /*var address = $clicked_element.text();
+  daily_weather_data["address"] = address;
+
+  $.ajax({
+
+            url : "https://ajisafet.cloudant.com/forecast/932b5e0f9627698b7c6e4aab9522ea64/" + latitude + "," + longitude,
+            data : {unit : "ca"},
+            type : "GET",
+            dataType: "json",
+            headers: { "Accept-Encoding" : "gzip" },
+            success: function(data, textStatus, jqXHR){
+              //var json2 = JSON.parse(data);
+              daily_weather_data = data;
+              saveDataInCloudant(event, daily_weather_data);
+
+            },
+            error: function(jqXHR,textStatus, errorThrown){
+
+              alert(textStatus);
+
+            }
+
+          });
+*/
+
 }

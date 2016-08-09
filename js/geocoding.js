@@ -9,16 +9,6 @@ $(document).ready(function(){
     getForecast(event);
   });
 
-  //on clicking one of the search results get weather data and submit to Cloudant
-  $(".search_results").click(function(event){
-
-    //var $clicked_element = $(this);
-    //$(event.target);
-    getWeatherData(event);
-
-  });
-
-
 });
 
 function getForecast(event){
@@ -57,10 +47,20 @@ function geocoding(location_text, event) {
                     });
                     $last_li.html(data.results[i].formatted_address);
                 }
+                //on clicking one of the search results get weather data and submit to Cloudant
+                $(".search_results").click(function(event){
 
+                  //var $clicked_element = $(this);
+                  //$(event.target);
+                  getWeatherData(event);
 
+                });
+                $address_list.parent().show();
               }
-							$address_list.parent().show();
+              else if (data.results.length==1) {
+                getWeatherData(null, data);
+              }
+
 						},
             error: function(jqXHR,textStatus, errorThrown){
 
