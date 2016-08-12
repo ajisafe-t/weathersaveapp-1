@@ -1,4 +1,10 @@
-var daily_weather_data="";
+//insert your forecast api key in the variable below
+var forecast_api_key = "";
+//put in cloudant username and password
+var cloudant_username = "";
+var cloudant_password = "";
+var daily_weather_data = "";
+
 
 //get weather data from Forecast.io API
 function getWeatherData(event, location_data){
@@ -24,7 +30,7 @@ function getWeatherData(event, location_data){
 
   $.ajax({
 
-            url : "https://api.forecast.io/forecast/932b5e0f9627698b7c6e4aab9522ea64/" + latitude + "," + longitude,
+            url : "https://api.forecast.io/forecast/" + forecast_api_key + "/" + latitude + "," + longitude,
             data : {units : "ca"},
             type : "GET",
             dataType: "jsonp",
@@ -54,7 +60,7 @@ function saveDataInCloudant(event, daily_weather_data){
   console.log(JSON.stringify(daily_weather_data));
   $.ajax({
 
-            url: "https://<username>.cloudant.com/weather_db",
+            url: "https://" + cloudant_username + ".cloudant.com/weather_db",
             type: "POST",
             dataType: "json",
             //username: "",
@@ -62,7 +68,7 @@ function saveDataInCloudant(event, daily_weather_data){
             contentType: "application/json",
             data: JSON.stringify(daily_weather_data),
             beforeSend: function (jqXHR, settings ) {
-              jqXHR.setRequestHeader("Authorization", "Basic " + btoa(""));
+              jqXHR.setRequestHeader("Authorization", "Basic " + btoa(cloudant_username + ":" + cloudant_password));
             },
             //headers: { "Origin" : "" },
             success: function(data, textStatus, jqXHR){

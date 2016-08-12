@@ -2,6 +2,7 @@ var li = "<li></li>"
 var $address_list="";
 var $search_results="";
 var test_status = true;
+//var cloudant_database = "";
 $(document).ready(function(){
 
   $address_list = $("ul.address_list");
