@@ -40,7 +40,7 @@ function getWeatherData(event, location_data){
               daily_weather_data = data;
               console.log("getWeatherData() success");
               console.log("latitude: " + data.latitude + ", longitude: " + data.longitude + ", timezone: " + data.timezone);
-              saveDataInCloudant(event, daily_weather_data);
+              saveDataInCloudant(daily_weather_data);
 
             },
             error: function(jqXHR,textStatus, errorThrown){
@@ -54,8 +54,8 @@ function getWeatherData(event, location_data){
 }
 
 //saves weather data into Cloudant database
-function saveDataInCloudant(event, daily_weather_data){
-  var $clicked_element = $(event.target);
+function saveDataInCloudant(daily_weather_data){
+  //var $clicked_element = $(event.target);
   //daily_weather_data["address"] = $clicked_element.html();
   console.log(JSON.stringify(daily_weather_data));
   $.ajax({
