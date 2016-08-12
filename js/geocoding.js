@@ -1,7 +1,7 @@
 var li = "<li></li>"
 var $address_list="";
 var $search_results="";
-
+var test_status = true;
 $(document).ready(function(){
 
   $address_list = $("ul.address_list");
@@ -35,7 +35,9 @@ function geocoding(location_text, event) {
 						dataType: 'json',
 						success: function(data, textStatus, jqXHR){
 							//var json2 = JSON.parse(data);
-              if (data.results.length>1){
+              //if Google geocoding API reports more than one location,
+              //show in a list so user can pick the desired location
+              if (data.results.length > 1){
 
                 for (i=0; i < data.results.length; i++){
                     $address_list.append(li);
@@ -47,16 +49,19 @@ function geocoding(location_text, event) {
                     });
                     $last_li.html(data.results[i].formatted_address);
                 }
+                //event handler for search results
                 //on clicking one of the search results get weather data and submit to Cloudant
                 $(".search_results").click(function(event){
 
                   //var $clicked_element = $(this);
                   //$(event.target);
-                  getWeatherData(event);
+                  getWeatherData(event, data);
 
                 });
                 $address_list.parent().show();
               }
+              //if one location reported from Google geocoding API, get
+              //weather data immediately
               else if (data.results.length==1) {
                 getWeatherData(null, data);
               }

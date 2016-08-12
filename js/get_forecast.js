@@ -1,18 +1,24 @@
 var daily_weather_data="";
 
+//get weather data from Forecast.io API
 function getWeatherData(event, location_data){
   var $clicked_element, latitude, longitude = null;
+
+  //one location reported by forecast.io API
   if (event == null) {
 
     latitude = location_data.results[0].geometry.location.lat;
     longitude = location_data.results[0].geometry.location.lng;
 
-  } else {
+  }
+  //get latitude and longitude from selected element when
+  //more than one location is reported by Google geocoding API
+  else {
 
     $clicked_element = $(event.target);
     latitude = $clicked_element.attr("lat");
     longitude = $clicked_element.attr("long");
-    
+
   }
   console.log("getWeatherData() start");
 
@@ -41,30 +47,34 @@ function getWeatherData(event, location_data){
 
 }
 
+//saves weather data into Cloudant database
 function saveDataInCloudant(event, daily_weather_data){
-  /*var address = $clicked_element.text();
-  daily_weather_data["address"] = address;
-
+  var $clicked_element = $(event.target);
+  //daily_weather_data["address"] = $clicked_element.html();
+  console.log(JSON.stringify(daily_weather_data));
   $.ajax({
 
-            url : "https://ajisafet.cloudant.com/forecast/932b5e0f9627698b7c6e4aab9522ea64/" + latitude + "," + longitude,
-            data : {unit : "ca"},
-            type : "GET",
+            url: "https://<username>.cloudant.com/weather_db",
+            type: "POST",
             dataType: "json",
-            headers: { "Accept-Encoding" : "gzip" },
+            //username: "",
+            //password: "",
+            contentType: "application/json",
+            data: JSON.stringify(daily_weather_data),
+            beforeSend: function (jqXHR, settings ) {
+              jqXHR.setRequestHeader("Authorization", "Basic " + btoa(""));
+            },
+            //headers: { "Origin" : "" },
             success: function(data, textStatus, jqXHR){
               //var json2 = JSON.parse(data);
-              daily_weather_data = data;
-              saveDataInCloudant(event, daily_weather_data);
-
+              console.log("Data saved in Cloudant! " + textStatus);
             },
             error: function(jqXHR,textStatus, errorThrown){
 
-              alert(textStatus);
+              alert(textStatus + ": " + errorThrown);
 
             }
 
           });
-*/
 
 }
